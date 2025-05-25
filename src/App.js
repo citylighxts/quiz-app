@@ -8,7 +8,6 @@ const QUIZ_TIME = 60; // detik
 const STORAGE_KEY = 'quizAppState';
 
 export default function App() {
-  // States
   const [user, setUser] = useState(null);
   const [quizData, setQuizData] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,45 +15,55 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState(QUIZ_TIME);
   const [quizFinished, setQuizFinished] = useState(false);
   const [loading, setLoading] = useState(false);
-  
+
+  const [category, setCategory] = useState('');
+  const [difficulty, setDifficulty] = useState('');
+  const [quizReady, setQuizReady] = useState(false);
+
   // Load state from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
         const state = JSON.parse(saved);
-        if(state.user) setUser(state.user);
-        if(state.quizData) setQuizData(state.quizData);
-        if(state.currentIndex !== undefined) setCurrentIndex(state.currentIndex);
-        if(state.answers) setAnswers(state.answers);
-        if(state.timeLeft !== undefined) setTimeLeft(state.timeLeft);
-        if(state.quizFinished !== undefined) setQuizFinished(state.quizFinished);
+        if (state.user) setUser(state.user);
+        if (state.quizData) setQuizData(state.quizData);
+        if (state.currentIndex !== undefined) setCurrentIndex(state.currentIndex);
+        if (state.answers) setAnswers(state.answers);
+        if (state.timeLeft !== undefined) setTimeLeft(state.timeLeft);
+        if (state.quizFinished !== undefined) setQuizFinished(state.quizFinished);
       } catch (error) {
         console.error('Error loading saved state:', error);
       }
     }
   }, []);
-  
-  // Save to localStorage
+
+  // Save state to localStorage
   useEffect(() => {
-    if(user) {
+    if (user) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         user, quizData, currentIndex, answers, timeLeft, quizFinished
       }));
     }
   }, [user, quizData, currentIndex, answers, timeLeft, quizFinished]);
-  
-  // Fetch quiz from API
+
+  // Fetch quiz data
   async function fetchQuiz() {
+    if (!category || !difficulty) {
+      alert('Please choose category and difficulty first.');
+      return;
+    }
+
     setLoading(true);
     try {
-      const res = await fetch('https://opentdb.com/api.php?amount=10&type=multiple');
+      const amount = 10; // jumlah soal
+      const res = await fetch(`https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`);
       const data = await res.json();
-      
+
       const formatted = data.results.map(q => {
         const choices = [...q.incorrect_answers, q.correct_answer];
         // Shuffle choices
-        for(let i = choices.length - 1; i > 0; i--) {
+        for (let i = choices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [choices[i], choices[j]] = [choices[j], choices[i]];
         }
@@ -64,12 +73,13 @@ export default function App() {
           correct: q.correct_answer,
         };
       });
-      
+
       setQuizData(formatted);
       setCurrentIndex(0);
       setAnswers([]);
       setTimeLeft(QUIZ_TIME);
       setQuizFinished(false);
+      setQuizReady(true);
     } catch (error) {
       console.error('Error fetching quiz:', error);
       alert('Gagal memuat soal. Silakan coba lagi.');
@@ -77,47 +87,78 @@ export default function App() {
       setLoading(false);
     }
   }
-  
-  // Handle login
+
   function onLogin(name) {
     setUser(name);
-    fetchQuiz();
   }
-  
-  // Handle answer
+
   function onAnswer(answer) {
     setAnswers(prev => [...prev, answer]);
-    if(currentIndex + 1 >= quizData.length) {
+    if (currentIndex + 1 >= quizData.length) {
       setQuizFinished(true);
     } else {
       setCurrentIndex(currentIndex + 1);
     }
   }
-  
-  // Timer effect
+
   useEffect(() => {
-    if(quizFinished || !user || !quizData) return;
-    
-    if(timeLeft <= 0) {
+    if (quizFinished || !user || !quizData) return;
+    if (timeLeft <= 0) {
       setQuizFinished(true);
       return;
     }
-    
+
     const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
     return () => clearTimeout(timer);
   }, [timeLeft, quizFinished, user, quizData]);
-  
-  // Reset quiz
+
   function resetQuiz() {
-    fetchQuiz();
+    setQuizReady(false);
+    setQuizData(null);
+    setCategory('');
+    setDifficulty('');
   }
-  
-  // Render components
-  if(!user) {
+
+  // RENDERING
+
+  if (!user) {
     return <Login onLogin={onLogin} />;
   }
-  
-  if(quizFinished && quizData) {
+
+  if (!quizReady) {
+    return (
+      <div className="settings-container">
+        <h2>Welcome, {user}!</h2>
+        <label>
+          Category:
+          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+            <option value="">--Choose Category--</option>
+            <option value="9">General Knowledge</option>
+            <option value="18">Science: Computers</option>
+            <option value="21">Sports</option>
+            <option value="23">History</option>
+            <option value="27">Animals</option>
+          </select>
+        </label>
+        <br />
+        <label>
+          Difficulty:
+          <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
+            <option value="">--Choose Difficulty--</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+        <br />
+        <button onClick={fetchQuiz} disabled={loading}>
+          {loading ? 'Loading...' : 'Start Quiz'}
+        </button>
+      </div>
+    );
+  }
+
+  if (quizFinished && quizData) {
     return (
       <Result
         quizData={quizData}
@@ -127,15 +168,15 @@ export default function App() {
       />
     );
   }
-  
-  if(loading || !quizData) {
+
+  if (loading || !quizData) {
     return (
       <div className="loading-container">
         <div className="loading-text">Loading quiz...</div>
       </div>
     );
   }
-  
+
   return (
     <Quiz
       question={quizData[currentIndex]}

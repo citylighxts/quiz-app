@@ -10,7 +10,6 @@ body {
   min-height: 100vh;
 }
 
-/* Login Styles */
 .login-container {
   display: flex;
   justify-content: center;
@@ -71,7 +70,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Quiz Styles */
 .quiz-container {
   max-width: 800px;
   margin: 0 auto;
@@ -284,7 +282,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Loading Styles */
 .loading-container {
   display: flex;
   justify-content: center;
@@ -298,27 +295,131 @@ body {
   font-weight: bold;
 }
 
+.settings-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.settings-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.settings-container label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #555;
+  text-align: left;
+}
+
+.settings-container select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.settings-container select:focus {
+  border-color: #a7097a;
+  outline: none;
+}
+
+.settings-container button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #a7097a;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.settings-container button:hover:not(:disabled) {
+  background-color: #870663;
+}
+
+.settings-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .quiz-info {
     flex-direction: column;
     gap: 10px;
+    align-items: center;
   }
-  
+
   .result-details {
     flex-direction: column;
   }
-  
+
   .result-actions {
     flex-direction: column;
+    gap: 10px;
   }
-  
+
   .login-card {
     min-width: auto;
     margin: 10px;
+    width: 100%;
+    max-width: 350px;
+    padding: 30px 20px;
+  }
+
+  .quiz-container {
+    padding: 10px 15px;
+  }
+
+  .settings-container {
+    width: 90%;
+    max-width: none;
+    margin: 20px auto;
+    padding: 15px 20px;
+  }
+
+  .settings-container label {
+    font-size: 14px;
+  }
+
+  .settings-container select {
+    font-size: 14px;
+    padding: 7px 10px;
+  }
+
+  .settings-container button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-container {
+    padding: 10px 15px;
   }
   
-  .quiz-container {
-    padding: 10px;
+  .settings-container label,
+  .settings-container select {
+    font-size: 13px;
+  }
+  
+  .settings-container button {
+    font-size: 15px;
   }
 }
