@@ -18,10 +18,24 @@ export default function Login({ onLogin }) {
         setIsSignup(false);
       }
     } else {
-      if (users[name] && users[name] === password) {
-        onLogin(name);
-      } else {
-        alert('Username atau password salah!');
+      switch (true) {
+        case !name && !password:
+          alert('Mohon masukkan username dan password!');
+          break;
+        case !name:
+          alert('Mohon masukkan username!');
+          break;
+        case !users[name]:
+          alert('Username tidak ditemukan!');
+          break;
+        case !password:
+          alert('Mohon masukkan password!');
+          break;
+        case users[name] === password:
+          onLogin(name);
+          break;
+        default:
+          alert('Password salah!');
       }
     }
   };
