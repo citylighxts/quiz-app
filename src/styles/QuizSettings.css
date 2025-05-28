@@ -1,0 +1,200 @@
+.quiz-settings-container {
+  position: relative;
+  padding: 2rem 0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Background slider container */
+.slider-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.slider-wrapper {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  height: calc((100vh - 2rem) / 3);
+  margin-bottom: 1rem;
+}
+
+.slider-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+/* Gradients */
+.gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  opacity: 0.5;
+}
+
+/* Animation */
+@keyframes slide-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-240%); }
+}
+
+@keyframes slide-right {
+  0% { transform: translateX(-240%); }
+  100% { transform: translateX(0); }
+}
+
+.slider {
+  display: flex;
+  width: 240%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.slider-left {
+  animation: slide-left 40s linear infinite;
+}
+
+.slider-right {
+  animation: slide-right 40s linear infinite;
+}
+
+.history-image {
+  width: 30%;
+  height: auto;
+  object-fit: cover;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+/* Foreground: Center content */
+.center-text {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.settings-card {
+  padding: 80px 60px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 60%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+  gap: 1rem;
+}
+
+.settings-container h2 {
+  margin-bottom: 20px;
+}
+
+.settings-container label {
+  display: block;
+  font-weight: 600;
+  text-align: left;
+  font-size: 20px;
+  margin-top: 1rem;
+}
+
+.settings-container select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.settings-container select:focus {
+  border-color: #a7097a;
+  outline: none;
+}
+
+.settings-container button {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 20px;
+  margin-top: 2.5rem;
+  background-color: #a7097a;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.settings-container button:hover:not(:disabled) {
+  background-color: #870663;
+}
+
+.settings-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .settings-container {
+    width: 90%;
+    max-width: none;
+    margin: 20px auto;
+    padding: 15px 20px;
+  }
+
+  .settings-container label {
+    font-size: 14px;
+  }
+
+  .settings-container select {
+    font-size: 14px;
+    padding: 7px 10px;
+  }
+
+  .settings-container button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-container {
+    padding: 10px 15px;
+  }
+
+  .settings-container label,
+  .settings-container select {
+    font-size: 13px;
+  }
+
+  .settings-container button {
+    font-size: 15px;
+  }
+}

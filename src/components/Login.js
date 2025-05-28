@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Login.css';
 
-const photos = ['photos/1.jpg', 'photos/2.jpg', 'photos/3.jpg'];
+const photos = ['/photos/1.jpg', '/photos/2.jpg', '/photos/3.jpg'];
 
 export default function Login({ onLogin }) {
   const [name, setName] = useState('');
@@ -91,8 +91,8 @@ export default function Login({ onLogin }) {
           </div>
         </div>
       </div>
-      <div className="slider-container">
-        <div className="slider-wrapper" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+      <div className="slider-login-container">
+        <div className="slider-login-wrapper" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {photos.map((photo, index) => (
             <div className="slide" key={index}>
               <img src={photo} alt={`Slide ${index}`} />

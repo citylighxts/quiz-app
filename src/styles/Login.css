@@ -6,7 +6,6 @@
   align-items: center;
   min-height: 100vh;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-template-rows: auto;
   background: white;
   overflow: hidden;
 }
@@ -79,13 +78,13 @@
 }
 
 /* Slider Container */
-.slider-container {
+.slider-login-container {
   position: relative;
   overflow: hidden;
   margin: auto;
 }
 
-.slider-wrapper {
+.slider-login-wrapper {
   display: flex;
   transition: transform 0.5s ease-in-out;
   height: 100%;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Quiz from './components/Quiz';
+import QuizSettings from './components/QuizSettings';
 import Result from './components/Result';
 import './styles/App.css';
 
@@ -127,36 +128,15 @@ export default function App() {
 
   if (!quizReady) {
     return (
-      <div className="settings-container">
-      <div className="settings-card">
-        <h2>Welcome, {user}!</h2>
-        <label>
-          Category:
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
-            <option value="">--Choose Category--</option>
-            <option value="9">General Knowledge</option>
-            <option value="18">Science: Computers</option>
-            <option value="21">Sports</option>
-            <option value="23">History</option>
-            <option value="27">Animals</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          Difficulty:
-          <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} required>
-            <option value="">--Choose Difficulty--</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </label>
-        <br />
-        <button onClick={fetchQuiz} disabled={loading}>
-          {loading ? 'Loading...' : 'Start Quiz'}
-        </button>
-      </div>
-      </div>
+      <QuizSettings
+        user={user}
+        category={category}
+        setCategory={setCategory}
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+        fetchQuiz={fetchQuiz}
+        loading={loading}
+      />
     );
   }
 

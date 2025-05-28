@@ -6,7 +6,6 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
 }
 
@@ -22,77 +21,6 @@ body {
   color: white;
   font-size: 24px;
   font-weight: bold;
-}
-
-/* Settings */
-.settings-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.settings-card {
-  background: white;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  min-width: 50%;
-  
-}
-
-.settings-container h2 {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.settings-container label {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  color: #555;
-  text-align: left;
-}
-
-.settings-container select {
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-  margin-top: 10px;
-}
-
-.settings-container select:focus {
-  border-color: #a7097a;
-  outline: none;
-}
-
-.settings-container button {
-  width: 100%;
-  padding: 10px 0;
-  background-color: #a7097a;
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.settings-container button:hover:not(:disabled) {
-  background-color: #870663;
-}
-
-.settings-container button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
 
 @media (max-width: 600px) {
@@ -114,40 +42,12 @@ body {
   .quiz-container {
     padding: 10px 15px;
   }
-
-  .settings-container {
-    width: 90%;
-    max-width: none;
-    margin: 20px auto;
-    padding: 15px 20px;
-  }
-
-  .settings-container label {
-    font-size: 14px;
-  }
-
-  .settings-container select {
-    font-size: 14px;
-    padding: 7px 10px;
-  }
-
-  .settings-container button {
-    font-size: 16px;
-    padding: 12px 0;
-  }
 }
 
-@media (max-width: 400px) {
-  .settings-container {
-    padding: 10px 15px;
-  }
-  
-  .settings-container label,
-  .settings-container select {
-    font-size: 13px;
-  }
-  
-  .settings-container button {
-    font-size: 15px;
-  }
+.page {
+  position: fixed; /* supaya halaman benar-benar "mengunci" tampilan */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: white; /* atau warna latar belakang */
+  z-index: 100; /* pastikan berada di atas */
+  overflow: auto;
 }
