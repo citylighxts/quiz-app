@@ -128,6 +128,7 @@ export default function App() {
   if (!quizReady) {
     return (
       <div className="settings-container">
+      <div className="settings-card">
         <h2>Welcome, {user}!</h2>
         <label>
           Category:
@@ -154,6 +155,7 @@ export default function App() {
         <button onClick={fetchQuiz} disabled={loading}>
           {loading ? 'Loading...' : 'Start Quiz'}
         </button>
+      </div>
       </div>
     );
   }

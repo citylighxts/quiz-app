@@ -46,14 +46,14 @@ export default function Login({ onLogin }) {
           <button onClick={handleSubmit}>
             {isSignup ? 'Sign Up' : 'Login'}
           </button>
-          <p>
+          <div className="auth-redirect">
             {isSignup
-              ? 'Sudah punya akun? '
-              : 'Belum punya akun? '}
-            <button onClick={() => setIsSignup(!isSignup)}>
+              ? 'Sudah punya akun?'
+              : 'Belum punya akun?'}
+            <div className='redirect' onClick={() => setIsSignup(!isSignup)}>
               {isSignup ? 'Login di sini' : 'Daftar di sini'}
-            </button>
-          </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
