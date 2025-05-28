@@ -69,7 +69,7 @@
 }
 
 .slider-right {
-  animation: slide-right 40s linear infinite;
+  animation: slide-right 60s linear infinite;
 }
 
 .history-image {
@@ -110,7 +110,7 @@
 }
 
 .settings-container h2 {
-  margin-bottom: 20px;
+  margin-bottom: 2.5rem;
 }
 
 .settings-container label {
