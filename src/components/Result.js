@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Result.css';
 
 export default function Result({ quizData, answers, onRestart, user }) {
   // Calculate score

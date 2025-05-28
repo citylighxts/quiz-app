@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Quiz.css';
 
 export default function Quiz({ question, onAnswer, current, total, timeLeft, user }) {
   return (
