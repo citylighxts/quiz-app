@@ -1,3 +1,4 @@
+// App.js - Updated
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Quiz from './components/Quiz';
@@ -21,7 +22,7 @@ export default function App() {
   const [difficulty, setDifficulty] = useState('');
   const [quizReady, setQuizReady] = useState(false);
 
-  // Load state from localStorage
+  // Load state from localStorage - COMMENTED OUT FOR CLAUDE.AI
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -39,7 +40,7 @@ export default function App() {
     }
   }, []);
 
-  // Save state to localStorage
+  // Save state to localStorage - COMMENTED OUT FOR CLAUDE.AI
   useEffect(() => {
     if (user) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -48,7 +49,7 @@ export default function App() {
     }
   }, [user, quizData, currentIndex, answers, timeLeft, quizFinished]);
 
-  // Fetch quiz data
+  // Fetch 20 random questions dari awal
   async function fetchQuiz() {
     if (!category || !difficulty) {
       alert('Please choose category and difficulty first.');
@@ -57,33 +58,36 @@ export default function App() {
 
     setLoading(true);
     try {
-      const amount = 10; // jumlah soal
+      const amount = 20; // Load 20 soal sekaligus dari awal
       const res = await fetch(`https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`);
       const data = await res.json();
 
-      const formatted = data.results.map(q => {
+      // Format semua 20 soal sekaligus
+      const formatted = data.results.map((q, index) => {
         const choices = [...q.incorrect_answers, q.correct_answer];
-        // Shuffle choices
+        // Shuffle choices untuk setiap soal
         for (let i = choices.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [choices[i], choices[j]] = [choices[j], choices[i]];
         }
         return {
+          id: index + 1, // ID soal 1-20
           question: q.question,
           choices,
           correct: q.correct_answer,
         };
       });
 
-      setQuizData(formatted);
-      setCurrentIndex(0);
-      setAnswers([]);
+      // Set semua data sekaligus
+      setQuizData(formatted); // Array berisi 20 soal
+      setCurrentIndex(0); // Mulai dari soal pertama
+      setAnswers(new Array(20).fill(null)); // Array jawaban untuk 20 soal
       setTimeLeft(QUIZ_TIME);
       setQuizFinished(false);
       setQuizReady(true);
     } catch (error) {
       console.error('Error fetching quiz:', error);
-      alert('Gagal memuat soal. Silakan coba lagi.');
+      alert('Error fetching quiz. Try again later.');
     } finally {
       setLoading(false);
     }
@@ -93,13 +97,25 @@ export default function App() {
     setUser(name);
   }
 
+  // Simpan jawaban untuk soal tertentu berdasarkan index
   function onAnswer(answer) {
-    setAnswers(prev => [...prev, answer]);
-    if (currentIndex + 1 >= quizData.length) {
-      setQuizFinished(true);
-    } else {
-      setCurrentIndex(currentIndex + 1);
+    setAnswers(prev => {
+      const newAnswers = [...prev];
+      newAnswers[currentIndex] = answer; // Simpan jawaban di index soal yang sedang aktif
+      return newAnswers;
+    });
+  }
+
+  // Navigasi ke soal tertentu (0-19)
+  function goToQuestion(index) {
+    if (index >= 0 && index < 20) {
+      setCurrentIndex(index);
     }
+  }
+
+  // Fungsi untuk finish quiz
+  function finishQuiz() {
+    setQuizFinished(true);
   }
 
   useEffect(() => {
@@ -165,8 +181,13 @@ export default function App() {
       onAnswer={onAnswer}
       current={currentIndex + 1}
       total={quizData.length}
+      currentIndex={currentIndex}
       timeLeft={timeLeft}
-      user={user}
+      category={category}
+      difficulty={difficulty}
+      answers={answers}
+      goToQuestion={goToQuestion}
+      finishQuiz={finishQuiz}
     />
   );
 }

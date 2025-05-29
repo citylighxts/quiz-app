@@ -25,7 +25,7 @@ export default function QuizSettings({
   return (
     <div className="quiz-settings-container">
       {/* TOP SLIDER */}
-      <div className="slider-top gradient">
+      <div className="slider-top">
         <div className="slider slider-left">
           {renderImages(1)}
         </div>
@@ -62,7 +62,7 @@ export default function QuizSettings({
       </div>
 
       {/* BOTTOM SLIDER */}
-      <div className="slider-bottom gradient">
+      <div className="slider-bottom">
         <div className="slider slider-right">
           {renderImages(2)}
         </div>
