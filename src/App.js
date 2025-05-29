@@ -22,7 +22,6 @@ export default function App() {
   const [difficulty, setDifficulty] = useState('');
   const [quizReady, setQuizReady] = useState(false);
 
-  // Load state from localStorage - COMMENTED OUT FOR CLAUDE.AI
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -40,7 +39,6 @@ export default function App() {
     }
   }, []);
 
-  // Save state to localStorage - COMMENTED OUT FOR CLAUDE.AI
   useEffect(() => {
     if (user) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
