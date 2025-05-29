@@ -43,7 +43,7 @@ export default function Quiz({
         </div>
 
         <div className='image-container'>
-          <img src="/photos/3.jpg"/>
+          <img src="/photos/3.jpg" alt='image-in-quiz'/>
         </div>
         
         <div className="question-section">
