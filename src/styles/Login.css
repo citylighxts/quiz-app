@@ -102,7 +102,7 @@
   object-fit: cover;
 }
 
-.nav-button {
+.login-nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -116,11 +116,11 @@
   z-index: 1;
 }
 
-.nav-button.left {
+.login-nav-button.left {
   left: 10px;
 }
 
-.nav-button.right {
+.login-nav-button.right {
   right: 10px;
 }
 

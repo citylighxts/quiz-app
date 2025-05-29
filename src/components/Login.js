@@ -100,8 +100,8 @@ export default function Login({ onLogin }) {
           ))}
         </div>
 
-        <button className="nav-button left" onClick={handlePrev}>‹</button>
-        <button className="nav-button right" onClick={handleNext}>›</button>
+        <button className="login-nav-button left" onClick={handlePrev}>‹</button>
+        <button className="login-nav-button right" onClick={handleNext}>›</button>
       </div>
     </div>
   );
